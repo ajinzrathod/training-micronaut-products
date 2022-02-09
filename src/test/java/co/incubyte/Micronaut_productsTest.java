@@ -17,5 +17,4 @@ class Micronaut_productsTest {
     void testItWorks() {
         Assertions.assertTrue(application.isRunning());
     }
-
 }

@@ -1,6 +1,7 @@
 package co.incubyte;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "products")
@@ -11,12 +12,18 @@ public class Product {
     private long id;
 
     @Column(name = "name")
+    @NotBlank(message = "Name cannot be blank")
+    @Size(min = 2, max = 100, message = "Name must be between 2 to 100 characters")
     private String name;
 
     @Column(name = "rate")
+    @NotBlank(message = "Rate cannot be blank")
+    @Min(value = 1, message = "Rate should not be less than 1")
+    @Max(value = 10000, message = "Age should not be greater than 10000")
     private double rate;
 
     @Column(name = "description")
+    @Size(min = 2, max = 255, message = "Name must be between 2 to 255 characters")
     private String description;
 
     public long getId() {
