@@ -6,6 +6,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 
 import javax.naming.NameAlreadyBoundException;
+import java.util.List;
 import java.util.Optional;
 
 @Controller("/products")
@@ -36,4 +37,10 @@ public class ProductController {
     public Product findByName(String name) {
         return productService.findByName(name);
     }
+
+    @Get("/pagable/{rate}/{size}")
+    public List<Product> getPagableByRate(int rate, int size) {
+        return productService.getPagableByRate(rate, size);
+    }
+
 }

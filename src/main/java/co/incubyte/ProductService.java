@@ -1,10 +1,14 @@
 package co.incubyte;
 
+import io.micronaut.data.model.Pageable;
 import jakarta.inject.Singleton;
 
 import javax.naming.NameAlreadyBoundException;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
+
+import static io.micronaut.data.model.Pageable.from;
 
 @Singleton
 public class ProductService {
@@ -36,5 +40,9 @@ public class ProductService {
     @Transactional
     public Product findByName(String name) {
         return productRepository.findByName(name);
+    }
+
+    public List<Product> getPagableByRate(int rate, int size) {
+        return productRepository.findAll(Pageable.from(rate, size)).getContent();
     }
 }
