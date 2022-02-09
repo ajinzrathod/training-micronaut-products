@@ -1,10 +1,9 @@
 package co.incubyte;
 
-import io.micronaut.data.exceptions.EmptyResultException;
 import jakarta.inject.Singleton;
 
+import javax.naming.NameAlreadyBoundException;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.util.Optional;
 
 @Singleton
@@ -17,18 +16,11 @@ public class ProductService {
     }
 
     @Transactional
-    public Product saveProduct(@Valid Product product) {
-//        validateUniqueProduct(product);
-        return productRepository.save(product);
-    }
-
-    @Transactional
-    public String validateUniqueProduct(String product) {
-        Product existingProduct = productRepository.findByName(product);
-        if (existingProduct != null) {
-            return "Existing";
+    public Product saveProduct(Product product) throws NameAlreadyBoundException {
+        if(productRepository.existsByName(product.getName())) {
+            throw new NameAlreadyBoundException();
         }
-        return "not Existing";
+        return productRepository.save(product);
     }
 
     @Transactional

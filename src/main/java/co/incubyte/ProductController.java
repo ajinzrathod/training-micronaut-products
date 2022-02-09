@@ -5,6 +5,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 
+import javax.naming.NameAlreadyBoundException;
 import java.util.Optional;
 
 @Controller("/products")
@@ -17,7 +18,7 @@ public class ProductController {
     }
 
     @Post("/save")
-    public Product saveProduct(@Body Product product) {
+    public Product saveProduct(@Body Product product) throws NameAlreadyBoundException {
         return productService.saveProduct(product);
     }
 
@@ -34,10 +35,5 @@ public class ProductController {
     @Get("/findByName/{name}")
     public Product findByName(String name) {
         return productService.findByName(name);
-    }
-
-    @Get("/checkunique/{name}")
-    public String checkUnique(String name) {
-        return productService.validateUniqueProduct(name);
     }
 }
